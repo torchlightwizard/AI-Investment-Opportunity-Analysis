@@ -1,25 +1,18 @@
 import os
-from dotenv import load_dotenv as env
+from dotenv import load_dotenv
 import requests
 import json
 from datetime import datetime, timedelta
 
 path_to_keys = "./keys/.env"
-env(path_to_keys)
+load_dotenv(path_to_keys)
 
 api_key = f"{os.getenv('YOUTUBE_API_KEY')}"
 output_folder_path = "./scrap/data/youtube/"
+
 video_id = ""
-channel_id = ""
-comment_id = ""
-caption_id = ""
 search_query = "new ai -tutorial -how -free -cheap -best -rich -trading -crypto -forex -shorts -beginners -beginner -game -gaming -walkthrough -playthrough -twitch -esports -song -songs -music -song -album -lyrics -concert -live -remix -beats -instrumental"
 limit = 10
-
-# 5.Video Top Comments and Statistics | {topLevelComment[id, snippet[textOriginal, likeCount, publishedAt]], totalReplyCount} | response["items"][i]["snippet"]
-utop_comments = f"https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId={video_id}&maxResults={limit}&order=relevance&key={api_key}"
-# 6. All Categories | {id, snippet[title]} | res["items"][i]
-ucategories_list = f"https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key={api_key}"
 
 
 
@@ -31,7 +24,7 @@ def get_response (url):
 
 
 
-def write_response(output_folder_path, file_name, data):
+def write_response (output_folder_path, file_name, data):
     os.makedirs(output_folder_path, exist_ok=True)
     time_stamp = datetime.now().strftime(('%Y_%m_%dT%H_%M_%S'))
     output_file_path = os.path.join(output_folder_path, f"{file_name}_{time_stamp}.json")
@@ -68,7 +61,7 @@ def get_video_statistics (api_key, output_folder_path, video_id):
     except ValueError as err:
         print(f"Data error: {err}") # possible cause: wrong video id
     except Exception as err:
-        print(f"Unexpected error: {err}") # possible cause: wrong
+        print(f"Unexpected error: {err}")
     return None
 
 
@@ -100,7 +93,7 @@ def get_video_details (api_key, output_folder_path, video_id):
     except ValueError as err:
         print(f"Data error: {err}") # possible cause: wrong video id
     except Exception as err:
-        print(f"Unexpected error: {err}") # possible cause: wrong
+        print(f"Unexpected error: {err}")
     return None
 
 
@@ -110,9 +103,10 @@ def get_top_videos (api_key, output_folder_path, search_query, limit):
         Fetches top videos after search from response["items"][i] and saves to a JSON file.
 
         Returns:
-            Response Object:  Video Ids | {id[videoId]}
+            Response Object: Video Ids | {id[videoId]}
     """
 
+    limit = str(limit)
     if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, search_query, limit]):
         raise TypeError("All Arguments must be strings.")
 
@@ -139,7 +133,49 @@ def get_top_videos (api_key, output_folder_path, search_query, limit):
     except requests.exceptions.RequestException as err:
         print(f"Request error: {err}") # possible cause: wrong api key
     except ValueError as err:
+        print(f"Data error: {err}") # possible cause: wrong search query
+    except Exception as err:
+        print(f"Unexpected error: {err}")
+    return None
+
+
+
+def get_top_comments (api_key, output_folder_path, video_id, limit):
+    """
+        Fetches top comments of a video from response["items"][i]["snippet"] and saves to a JSON file.
+
+        Returns:
+            Response Object: Video Top Comments and Statistics | {topLevelComment[snippet[textOriginal, likeCount, publishedAt]], totalReplyCount}
+    """
+
+    limit = str(limit)
+    if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, video_id, limit]):
+        raise TypeError("All Arguments must be strings.")
+
+    try:
+        yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
+        url = f"https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId={video_id}&maxResults={limit}&order=relevance&key={api_key}"
+        res = get_response(url)
+        if "items" not in res or not res["items"]:
+            raise ValueError("Invalid response. No items found.")
+        items = res["items"]
+        data = []
+        for item in items:
+            item_snippet = item["snippet"]["topLevelComment"]["snippet"]
+            data.append({
+                "textOriginal": item_snippet["textOriginal"],
+                "likeCount": item_snippet["likeCount"],
+                "publishedAt": item_snippet["publishedAt"],
+                "totalReplyCount": item["snippet"]["totalReplyCount"]
+            })
+
+        file_name = f"top_comments_{video_id}"
+        return write_response(output_folder_path, file_name, data)
+    
+    except requests.exceptions.RequestException as err:
+        print(f"Request error: {err}") # possible cause: wrong api key
+    except ValueError as err:
         print(f"Data error: {err}") # possible cause: wrong video id
     except Exception as err:
-        print(f"Unexpected error: {err}") # possible cause: wrong
+        print(f"Unexpected error: {err}")
     return None
