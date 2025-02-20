@@ -133,7 +133,7 @@ def get_top_videos (api_key, output_folder_path, search_query, limit):
     except requests.exceptions.RequestException as err:
         print(f"Request error: {err}") # possible cause: wrong api key
     except ValueError as err:
-        print(f"Data error: {err}") # possible cause: wrong search query
+        print(f"Data error: {err}") # possible cause: wrong video id
     except Exception as err:
         print(f"Unexpected error: {err}")
     return None
@@ -179,3 +179,48 @@ def get_top_comments (api_key, output_folder_path, video_id, limit):
     except Exception as err:
         print(f"Unexpected error: {err}")
     return None
+
+
+
+def get_categories (api_key, output_folder_path):
+    """
+        Fetches all categories from response["items"][i] and saves to a JSON file.
+
+        Returns:
+            Response Object: All Categories | {id, snippet[title]} | 
+    """
+
+    if not all(isinstance(arg, str) for arg in [api_key, output_folder_path]):
+        raise TypeError("All Arguments must be strings.")
+
+    try:
+        url = f"https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key={api_key}"
+        res = get_response(url)
+        if "items" not in res or not res["items"]:
+            raise ValueError("Invalid response. No items found.")
+        items = res["items"]
+        data = []
+        for item in items:
+            data.append({
+                "id": item["id"],
+                "title": item["snippet"]["title"]
+            })
+
+        file_name = f"categories"
+        return write_response(output_folder_path, file_name, data)
+    
+    except requests.exceptions.RequestException as err:
+        print(f"Request error: {err}") # possible cause: wrong api key
+    except ValueError as err:
+        print(f"Data error: {err}") # possible cause: wrong video id
+    except Exception as err:
+        print(f"Unexpected error: {err}")
+    return None
+
+
+
+# get_video_statistics (api_key, output_folder_path, video_id)
+# get_video_details (api_key, output_folder_path, video_id)
+# get_top_videos (api_key, output_folder_path, search_query, limit)
+# get_top_comments (api_key, output_folder_path, video_id, limit)
+# get_categories (api_key, output_folder_path)
