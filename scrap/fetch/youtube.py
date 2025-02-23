@@ -1,8 +1,8 @@
-import os
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
+import os
 import requests
 import json
-from datetime import datetime, timedelta
 
 path_to_keys = "./keys/.env"
 load_dotenv(path_to_keys)
@@ -98,7 +98,7 @@ def get_video_details (api_key, output_folder_path, video_id):
 
 
 
-def get_top_videos (api_key, output_folder_path, search_query, limit):
+def get_videos (api_key, output_folder_path, search_query, limit):
     """
         Fetches top videos after search from response["items"][i] and saves to a JSON file.
 
@@ -140,7 +140,7 @@ def get_top_videos (api_key, output_folder_path, search_query, limit):
 
 
 
-def get_top_comments (api_key, output_folder_path, video_id, limit):
+def get_comments (api_key, output_folder_path, video_id, limit):
     """
         Fetches top comments of a video from response["items"][i]["snippet"] and saves to a JSON file.
 
@@ -221,6 +221,6 @@ def get_categories (api_key, output_folder_path):
 
 # get_video_statistics (api_key, output_folder_path, video_id)
 # get_video_details (api_key, output_folder_path, video_id)
-# get_top_videos (api_key, output_folder_path, search_query, limit)
-# get_top_comments (api_key, output_folder_path, video_id, limit)
+# get_videos (api_key, output_folder_path, search_query, limit)
+# get_comments (api_key, output_folder_path, video_id, limit)
 # get_categories (api_key, output_folder_path)
