@@ -12,7 +12,7 @@ auth_params = {
     "client_id": f"{os.getenv('REDDIT_CLIENT_ID')}",
     "client_secret": f"{os.getenv('REDDIT_CLIENT_SECRET')}",
     "user_agent": f"{os.getenv('REDDIT_USER_AGENT')}",
-    "redirect_uri": f"{os.getenv('URL')}:{os.getenv('Port')}",
+    "redirect_uri": f"{os.getenv('URL')}:{os.getenv('PORT')}",
     "path_to_token": f"{os.getenv('RPATH_TO_TOKEN')}"
     }
 state = str(uuid.uuid4())
