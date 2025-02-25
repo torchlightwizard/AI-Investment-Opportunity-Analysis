@@ -64,4 +64,64 @@ def get_creds (path_to_secret, path_to_token, scopes, port):
         print(f"Google Authentication Error: {err}")
     except Exception as err:
         print(f"Unexpected Error: {err}")
-    return None
+    return 
+
+
+
+def get_youtube (credentials):
+    """
+        Gets a youtube resource to interact with the api.
+
+        Returns:
+            Resource Object: googleapiclient.discovery.Resource
+    """
+
+    try:
+        youtube = build("youtube", "v3", credentials=credentials)
+        return youtube
+    except Exception as err:
+        print(f"Unexpected Error: {err}")
+        return None
+
+
+
+def auth (path_to_secret, path_to_token, scopes, port):
+    """
+        Combines get_credits and get_youtube and gives a Resource.
+
+        Returns:
+            Resource Object: googleapiclient.discovery.Resource
+    """
+
+    creds = get_creds(path_to_secret, path_to_token, scopes, port)
+    if creds is None:
+        print("Credentials creation failed.")
+        return None
+    youtube = get_youtube(creds)
+    if youtube is None:
+        print("Resource creation failed.")
+    return youtube
+
+
+
+def get_video_statistics (path_to_secret, path_to_token, scopes, port, output_folder_path, video_id):
+    """
+        Fetches video statistics from response["items"][0]["statistics"] and saves to a JSON file.
+
+        Returns:
+            Response Object: Video Statistics | {viewCount, likeCount, commentCount}
+    """
+        
+    youtube = auth(path_to_secret, path_to_token, scopes, port)
+    if youtube is None:
+        return None
+    
+    req = youtube.videos().list(part="statistics", id=video_id)
+    res = req.execute()
+    if "items" not in res or not res["items"]:
+        raise ValueError("Invalid response. No items found.")
+    data = res["items"][0]["statistics"]
+    data = {key:value for key, value in data.items() if key in ["viewCount", "likeCount", "commentCount"]}
+
+    file_name = f"video_statistics_{video_id}"
+    return write_response(output_folder_path, file_name, data)

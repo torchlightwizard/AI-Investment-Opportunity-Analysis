@@ -42,10 +42,10 @@ def get_video_statistics (api_key, output_folder_path, video_id):
             Response Object: Video Statistics | {viewCount, likeCount, commentCount}
     """
 
-    if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, video_id]):
-        raise TypeError("All Arguments must be strings.")
-
     try:
+        if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, video_id]):
+            raise TypeError("All Arguments must be strings.")
+
         url = f"https://www.googleapis.com/youtube/v3/videos?part=statistics&id={video_id}&key={api_key}"
         res = get_response(url)
         if "items" not in res or not res["items"]:
@@ -74,10 +74,10 @@ def get_video_details (api_key, output_folder_path, video_id):
             Response Object: Video Details | {title, description, publishedAt, channelId, channelTitle, categoryId}
     """
 
-    if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, video_id]):
-        raise TypeError("All Arguments must be strings.")
-
     try:
+        if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, video_id]):
+            raise TypeError("All Arguments must be strings.")
+
         url = f"https://www.googleapis.com/youtube/v3/videos?part=snippet&id={video_id}&key={api_key}"
         res = get_response(url)
         if "items" not in res or not res["items"]:
@@ -106,11 +106,11 @@ def get_videos (api_key, output_folder_path, search_query, limit):
             Response Object: Video Ids | {id[videoId]}
     """
 
-    limit = str(limit)
-    if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, search_query, limit]):
-        raise TypeError("All Arguments must be strings.")
-
     try:
+        limit = str(limit)
+        if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, search_query, limit]):
+            raise TypeError("All Arguments must be strings.")
+
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
         url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={search_query}&type=video&videoDuration=medium&maxResults={limit}&order=date&relevanceLanguage=en&publishedAfter={yesterday}&key={api_key}"
         res = get_response(url)
@@ -148,11 +148,11 @@ def get_comments (api_key, output_folder_path, video_id, limit):
             Response Object: Video Top Comments and Statistics | {topLevelComment[snippet[textOriginal, likeCount, publishedAt]], totalReplyCount}
     """
 
-    limit = str(limit)
-    if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, video_id, limit]):
-        raise TypeError("All Arguments must be strings.")
-
     try:
+        limit = str(limit)
+        if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, video_id, limit]):
+            raise TypeError("All Arguments must be strings.")
+
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
         url = f"https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId={video_id}&maxResults={limit}&order=relevance&key={api_key}"
         res = get_response(url)
@@ -190,10 +190,10 @@ def get_categories (api_key, output_folder_path):
             Response Object: All Categories | {id, snippet[title]} | 
     """
 
-    if not all(isinstance(arg, str) for arg in [api_key, output_folder_path]):
-        raise TypeError("All Arguments must be strings.")
-
     try:
+        if not all(isinstance(arg, str) for arg in [api_key, output_folder_path]):
+            raise TypeError("All Arguments must be strings.")
+
         url = f"https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key={api_key}"
         res = get_response(url)
         if "items" not in res or not res["items"]:
