@@ -49,3 +49,36 @@ def auth (client_id, client_secret, user_agent, username, password):
         print(f"Failed to intialize reddit.")
         print(f"Unexpected Error: {err}")
     return None
+
+
+
+def get_posts_subreddit (auth_params, subreddits, limit=20):
+    subreddit_posts = []
+    try:
+        reddit = auth (**auth_params)
+        if reddit is None:
+            raise RuntimeError(f"Failed to create reddit instance.")
+        
+        for subreddit in subreddits:
+            try:
+                posts = reddit.subreddit(subreddit).top(limit=limit)
+
+                for post in posts:
+                    subreddit_post = {
+                        "id": post.id,
+                        "subreddit_id": post.subreddit_id,
+                        "title": post.title,
+                        "description":post.selftext if post.selftext else "No Description",
+                        "num_comments": post.num_comments,
+                        "score": post.score,
+                        "upvote_ratio": post.upvote_ratio,
+                        "url": post.url
+                    }
+                    subreddit_posts.append(subreddit_post)
+            except Exception as err:
+                print(f"Error fetching or handling response.")
+    except Exception as err:
+        print(f"Unexpected Error: {err}")
+
+    file_name = f"subreddit_posts"
+    return write_response(output_folder_path, file_name, subreddit_posts)
