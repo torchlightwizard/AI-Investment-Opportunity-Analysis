@@ -2,21 +2,23 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 import os
 import requests
-import json
 
 path_to_keys = "./keys/.env"
 load_dotenv(path_to_keys)
 
 api_key = f"{os.getenv('YOUTUBE_API_KEY')}"
-output_folder_path = "./scrap/data/youtube/"
-
-video_id = ""
-search_query = "new ai -tutorial -how -free -cheap -best -rich -trading -crypto -forex -shorts -beginners -beginner -game -gaming -walkthrough -playthrough -twitch -esports -song -songs -music -song -album -lyrics -concert -live -remix -beats -instrumental"
 limit = 10
 
 
 
 def get_response (url):
+    """
+        Returns the response of request in json format.
+
+        Return:
+            Dict: requests.models.Response.text (str) or requests.models.Response.text (bytes)
+    """
+
     res = requests.get(url)
     res.raise_for_status()
     res = res.json()
@@ -24,99 +26,112 @@ def get_response (url):
 
 
 
-def write_response (output_folder_path, file_name, data):
-    os.makedirs(output_folder_path, exist_ok=True)
-    time_stamp = datetime.now().strftime(('%Y_%m_%dT%H_%M_%S'))
-    output_file_path = os.path.join(output_folder_path, f"{file_name}_{time_stamp}.json")
-    with open(output_file_path, "w") as file:
-        json.dump(data, file, indent=4)
-    return data
-
-
-
-def get_video_statistics (api_key, output_folder_path, video_id):
+def get_video_statistics (video_id, api_key=api_key):
     """
-        Fetches video statistics from response["items"][0]["statistics"] and saves to a JSON file.
+        Fetches video statistics.
 
         Returns:
-            Response Object: Video Statistics | {viewCount, likeCount, commentCount}
+            Dict: {
+                viewCount,
+                likeCount,
+                commentCount,
+                id
+            }
     """
 
     try:
-        if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, video_id]):
-            raise TypeError("All Arguments must be strings.")
+        if not all(isinstance(arg, str) for arg in [api_key, video_id]):
+            raise TypeError("api_key, video_id arguments must be strings.")
 
         url = f"https://www.googleapis.com/youtube/v3/videos?part=statistics&id={video_id}&key={api_key}"
         res = get_response(url)
         if "items" not in res or not res["items"]:
             raise ValueError("Invalid response. No items found.")
-        data = res["items"][0]["statistics"]
-        data = {key:value for key, value in data.items() if key in ["viewCount", "likeCount", "commentCount"]}
-
-        file_name = f"video_statistics_{video_id}"
-        return write_response(output_folder_path, file_name, data)
+        items = res.get("items", None)
+        first_item = items[0] if isinstance(items, list) else None
+        statistics = first_item.get("statistics", None) if isinstance(first_item, dict) else None
+        data = {key:value for key, value in statistics.items() if key in ["viewCount", "likeCount", "commentCount"]}
+        data["id"] = first_item.get("id", None)
+        return data
     
     except requests.exceptions.RequestException as err:
-        print(f"Request error: {err}") # possible cause: wrong api key
+        print(f"Function: get_video_statistics. Request error: {err}") # possible cause: wrong api key
     except ValueError as err:
-        print(f"Data error: {err}") # possible cause: wrong video id
+        print(f"Function: get_video_statistics. Data error: {err}")
     except Exception as err:
-        print(f"Unexpected error: {err}")
+        print(f"Function: get_video_statistics. Unexpected error: {err}")
     return None
 
 
 
-def get_video_details (api_key, output_folder_path, video_id):
+def get_video_details (video_id, api_key=api_key):
     """
-        Fetches video details from response["items"][0]["snippet"] and saves to a JSON file.
+        Fetches video details.
 
         Returns:
-            Response Object: Video Details | {title, description, publishedAt, channelId, channelTitle, categoryId}
+            Dict: {
+                publishedAt,
+                channelId,
+                title,
+                description,
+                channelTitle,
+                categoryId,
+                id
+            }
     """
 
     try:
-        if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, video_id]):
-            raise TypeError("All Arguments must be strings.")
+        if not all(isinstance(arg, str) for arg in [api_key, video_id]):
+            raise TypeError("api_key, video_id arguments must be strings.")
 
         url = f"https://www.googleapis.com/youtube/v3/videos?part=snippet&id={video_id}&key={api_key}"
         res = get_response(url)
         if "items" not in res or not res["items"]:
             raise ValueError("Invalid response. No items found.")
-        data = res["items"][0]["snippet"]
-        data = {key:value for key, value in data.items() if key in ["title", "description", "publishedAt", "channelId", "channelTitle", "categoryId"]}
-
-        file_name = f"video_details_{video_id}"
-        return write_response(output_folder_path, file_name, data)
+        items = res.get("items", None)
+        first_item = items[0] if isinstance(items, list) else None
+        snippet = first_item.get("snippet", None) if isinstance(first_item, dict) else None
+        data = {key:value for key, value in snippet.items() if key in ["title", "description", "publishedAt", "channelId", "channelTitle", "categoryId"]}
+        data["id"] = first_item.get("id", None)
+        return data
     
     except requests.exceptions.RequestException as err:
-        print(f"Request error: {err}") # possible cause: wrong api key
+        print(f"Function: get_video_details. Request error: {err}") # possible cause: wrong api key
     except ValueError as err:
-        print(f"Data error: {err}") # possible cause: wrong video id
+        print(f"Function: get_video_details. Data error: {err}")
     except Exception as err:
-        print(f"Unexpected error: {err}")
+        print(f"Function: get_video_details. Unexpected error: {err}")
     return None
 
 
 
-def get_videos (api_key, output_folder_path, search_query, limit):
+def get_videos (search_query, days_offset=1, api_key=api_key, limit=limit):
     """
-        Fetches top videos after search from response["items"][i] and saves to a JSON file.
+        Fetches top videos after searching.
 
         Returns:
-            Response Object: Video Ids | {id[videoId]}
+            List: [
+                    {
+                        id,
+                        title,
+                        description,
+                        publishedAt,
+                        channelId
+                    },
+                ]
     """
 
     try:
         limit = str(limit)
-        if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, search_query, limit]):
-            raise TypeError("All Arguments must be strings.")
+        if not all(isinstance(arg, str) for arg in [api_key, search_query]):
+            raise TypeError("api_key, search_query arguments must be strings.")
 
-        yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
+        yesterday = (datetime.now() - timedelta(days=days_offset)).strftime('%Y-%m-%dT%H:%M:%SZ')
         url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={search_query}&type=video&videoDuration=medium&maxResults={limit}&order=date&relevanceLanguage=en&publishedAfter={yesterday}&key={api_key}"
         res = get_response(url)
         if "items" not in res or not res["items"]:
             raise ValueError("Invalid response. No items found.")
-        items = res["items"]
+        items = res.get("items", [])
         data = []
         for item in items:
             data.append({
@@ -126,101 +141,104 @@ def get_videos (api_key, output_folder_path, search_query, limit):
                 "publishedAt": item["snippet"]["publishedAt"],
                 "channelId": item["snippet"]["channelId"]
             })
-
-        file_name = f"top_videos"
-        return write_response(output_folder_path, file_name, data)
+        return data
     
     except requests.exceptions.RequestException as err:
-        print(f"Request error: {err}") # possible cause: wrong api key
+        print(f"Function: get_videos. Request error: {err}") # possible cause: wrong api key
     except ValueError as err:
-        print(f"Data error: {err}") # possible cause: wrong video id
+        print(f"Function: get_videos. Data error: {err}")
     except Exception as err:
-        print(f"Unexpected error: {err}")
+        print(f"Function: get_videos. Unexpected error: {err}")
     return None
 
 
 
-def get_comments (api_key, output_folder_path, video_id, limit):
+def get_comments (video_id, api_key=api_key, limit=limit):
     """
-        Fetches top comments of a video from response["items"][i]["snippet"] and saves to a JSON file.
+        Fetches top comments of a video.
 
         Returns:
-            Response Object: Video Top Comments and Statistics | {topLevelComment[snippet[textOriginal, likeCount, publishedAt]], totalReplyCount}
+            List: [
+                    {
+                        id,
+                        video_id,
+                        textOriginal,
+                        likeCount,
+                        publishedAt,
+                        totalReplyCount
+                    },
+                ]
     """
 
     try:
         limit = str(limit)
-        if not all(isinstance(arg, str) for arg in [api_key, output_folder_path, video_id, limit]):
-            raise TypeError("All Arguments must be strings.")
-
+        if not all(isinstance(arg, str) for arg in [api_key, video_id]):
+            raise TypeError("api_key, video_id arguments must be strings.")
+        
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
         url = f"https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId={video_id}&maxResults={limit}&order=relevance&key={api_key}"
         res = get_response(url)
         if "items" not in res or not res["items"]:
             raise ValueError("Invalid response. No items found.")
-        items = res["items"]
+        items = res.get("items", [])
         data = []
         for item in items:
             item_snippet = item["snippet"]["topLevelComment"]["snippet"]
+            id = item["snippet"]["topLevelComment"]["id"]
             data.append({
+                "id": id,
+                "video_id": video_id,
                 "textOriginal": item_snippet["textOriginal"],
                 "likeCount": item_snippet["likeCount"],
                 "publishedAt": item_snippet["publishedAt"],
                 "totalReplyCount": item["snippet"]["totalReplyCount"]
             })
-
-        file_name = f"top_comments_{video_id}"
-        return write_response(output_folder_path, file_name, data)
+        return data
     
     except requests.exceptions.RequestException as err:
-        print(f"Request error: {err}") # possible cause: wrong api key
+        print(f"Function: get_comments. Request error: {err}") # possible cause: wrong api key
     except ValueError as err:
-        print(f"Data error: {err}") # possible cause: wrong video id
+        print(f"Function: get_comments. Data error: {err}")
     except Exception as err:
-        print(f"Unexpected error: {err}")
+        print(f"Function: get_comments. Unexpected error: {err}")
     return None
 
 
 
-def get_categories (api_key, output_folder_path):
+def get_categories (api_key=api_key):
     """
-        Fetches all categories from response["items"][i] and saves to a JSON file.
+        Fetches all categories.
 
         Returns:
-            Response Object: All Categories | {id, snippet[title]} | 
+            List: [
+                    {
+                        id,
+                        title
+                    },
+                ]
     """
 
     try:
-        if not all(isinstance(arg, str) for arg in [api_key, output_folder_path]):
-            raise TypeError("All Arguments must be strings.")
+        if not all(isinstance(arg, str) for arg in [api_key]):
+            raise TypeError("api_key arguments must be strings.")
 
         url = f"https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key={api_key}"
         res = get_response(url)
         if "items" not in res or not res["items"]:
             raise ValueError("Invalid response. No items found.")
-        items = res["items"]
+        items = res.get("items", [])
         data = []
         for item in items:
             data.append({
                 "id": item["id"],
                 "title": item["snippet"]["title"]
             })
-
-        file_name = f"categories"
-        return write_response(output_folder_path, file_name, data)
+        return data
     
     except requests.exceptions.RequestException as err:
-        print(f"Request error: {err}") # possible cause: wrong api key
+        print(f"Function: get_categories. Request error: {err}") # possible cause: wrong api key
     except ValueError as err:
-        print(f"Data error: {err}") # possible cause: wrong video id
+        print(f"Function: get_categories. Data error: {err}")
     except Exception as err:
-        print(f"Unexpected error: {err}")
+        print(f"Function: get_categories. Unexpected error: {err}")
     return None
-
-
-
-# get_video_statistics (api_key, output_folder_path, video_id)
-# get_video_details (api_key, output_folder_path, video_id)
-# get_videos (api_key, output_folder_path, search_query, limit)
-# get_comments (api_key, output_folder_path, video_id, limit)
-# get_categories (api_key, output_folder_path)
