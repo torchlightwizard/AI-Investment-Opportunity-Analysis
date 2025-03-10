@@ -1,2 +1,2 @@
 .localenv
-keys/**
+**/__pycache__/
