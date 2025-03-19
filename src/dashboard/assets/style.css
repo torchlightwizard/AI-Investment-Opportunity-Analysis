@@ -1,0 +1,46 @@
+html, body {
+    background-color: #1e1e1e !important;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#root {
+    height: 100%;
+}
+
+.dash-container {
+    height: 100%;
+    width: 100%;
+}
+
+.Select-control {
+    background-color: #1e1e1e !important;
+    color: #E0E0E0 !important;
+}
+
+.Select-value {
+    background-color: #1e1e1e !important;
+    color: #E0E0E0 !important;
+}
+
+.Select-value-label {
+    background-color: #1e1e1e !important;
+    color: #E0E0E0 !important;
+}
+
+.Select-menu {
+    background-color: #1e1e1e !important;
+    color: #E0E0E0 !important;
+}
+
+.VirtualizedSelectOption {
+    background-color: #1e1e1e !important;
+    color: #E0E0E0 !important;
+}
+
+.VirtualizedSelectFocusedOption {
+    background-color: #333 !important;
+    color: #E0E0E0 !important;
+}
