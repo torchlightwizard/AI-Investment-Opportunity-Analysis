@@ -1,0 +1,27 @@
+{
+    "company": [
+        {
+            "name": "Meta",
+            "stock_indicator": "META"
+        },
+        {
+            "name": "Microsoft",
+            "stock_indicator": "MSFT"
+        },
+        {
+            "name": "Nvidia",
+            "stock_indicator": "NVDA"
+        }
+    ],
+    "keys": {
+        "youtube": ["-tutorial -how -free -cheap -best -rich -trading -crypto -forex -shorts -beginners -beginner -game -gaming -walkthrough -playthrough -twitch -esports -song -songs -music -song -album -lyrics -concert -live -remix -beats -instrumental"],
+        "reddit": {
+            "subreddits": ["artificial", "aibusiness", "AI_News"],
+            "queries": [""]
+        },
+        "googlesearch": ["latest news"],
+        "news_apiorg": [""],
+        "news_dataio": [""],
+        "news_marketaux": [""]
+    }
+}
