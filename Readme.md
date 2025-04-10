@@ -10,7 +10,9 @@ We want to trade popular stocks that relate to ai tech companies. We are interes
 
 ## Proposed Solution
 1. Get data from different sources and store them in a data lake and in a datawarehouse.<br>
-2. Build a dashboard that displays sentiment analysis scores and engagement of each stock for each platform separately.<br>
+2. Calculate sentiment with Bert.
+3. Calculate engagement metrics.
+4. Build a dashboard that displays sentiment analysis scores and engagement of each stock for each platform separately.<br>
 
 
 
@@ -77,9 +79,10 @@ We search the company name and related queries on these platforms and use the re
 # Tools Used:
 1. APIs listed below
 2. Duckdb
-3. Plotly Express
-4. Plotly Dash
-5. Pandas
+3. BERT
+4. Plotly Express
+5. Plotly Dash
+6. Pandas
 
 
 
