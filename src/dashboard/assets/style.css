@@ -1,5 +1,18 @@
+:root {
+    --div_bg: #333533;
+    --div_txt: #fdfffc;
+
+    --select_bg: #242423;
+    --select_txt: #fdfffc;
+
+    --card_bg: #242423;
+    --card_txt: #fdfffc;
+
+    --border_bg: #43aa8b;
+}
+
 html, body {
-    background-color: #1e1e1e !important;
+    background-color: var(--select_bg) !important;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -16,31 +29,86 @@ html, body {
 }
 
 .Select-control {
-    background-color: #1e1e1e !important;
-    color: #E0E0E0 !important;
+    background-color: var(--select_bg) !important;
+    color: var(--select_txt) !important;
+    
+    border-width: 3px;
+    border-color: var(--border_bg);
+    border-style: solid;
+    border-radius: 8px;
 }
 
 .Select-value {
-    background-color: #1e1e1e !important;
-    color: #E0E0E0 !important;
+    background-color: var(--select_bg) !important;
+    color: var(--select_txt) !important;
 }
 
 .Select-value-label {
-    background-color: #1e1e1e !important;
-    color: #E0E0E0 !important;
+    background-color: var(--select_bg) !important;
+    color: var(--select_txt) !important;
 }
 
 .Select-menu {
-    background-color: #1e1e1e !important;
-    color: #E0E0E0 !important;
+    background-color: var(--select_bg) !important;
+    color: var(--select_txt) !important;
 }
 
 .VirtualizedSelectOption {
-    background-color: #1e1e1e !important;
-    color: #E0E0E0 !important;
+    background-color: var(--select_bg) !important;
+    color: var(--select_txt) !important;
 }
 
 .VirtualizedSelectFocusedOption {
-    background-color: #333 !important;
-    color: #E0E0E0 !important;
+    background-color: var(--select_bg) !important;
+    color: #ef8354;
+}
+
+.KpiBox {
+    background: var(--card_bg);
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    color: var(--card_txt);
+    
+    /* More dominant, modern box shadow */
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
+    transition: all 0.2s ease;
+
+    border-width: 3px;
+    border-color: var(--border_bg);
+    border-style: solid;
+    border-radius: 8px;
+}
+  
+.KpiBox:hover {
+    transform: translateY(-3px);
+    box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.5);
+}
+  
+
+.KpiGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: var(--div_bg);
+    border-radius: 10px
+}
+
+.PieDiv {
+    background: var(--card_bg);
+
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
+    transition: all 0.2s ease;
+
+    border-width: 3px;
+    border-color: var(--border_bg);
+    border-style: solid;
+    border-radius: 8px;
 }

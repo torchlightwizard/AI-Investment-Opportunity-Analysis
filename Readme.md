@@ -74,6 +74,15 @@ We search the company name and related queries on these platforms and use the re
 
 
 
+# Tools Used:
+1. APIs listed below
+2. Duckdb
+3. Plotly Express
+4. Plotly Dash
+5. Pandas
+
+
+
 # How to run:
 1. Configure Project:
 ```
@@ -94,15 +103,6 @@ python -m venv .localenv
     ```
     .localenv\Scripts\python -m src.dashboard.dashboard
     ```
-
-
-
-# Tools:
-1. APIs listed below
-2. Duckdb
-3. Plotly Express
-4. Plotly Dash
-5. Pandas
 
 
 

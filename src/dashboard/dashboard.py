@@ -37,51 +37,36 @@ def get_data(company):
 
 app = dash.Dash(__name__)
 
-dark_theme = {"background": "#121212", "card": "#1E1E1E", "text": "#E0E0E0", "accent": "#A970FF"}
+dark_theme = {"background": "#333533", "card": "#242423", "text": "#fdfffc"}
 
 app.layout = html.Div([
-    html.H3("Dashboard - Realtime Engagement and Sentiment Scores", style={
-        "width": "100%", 
-        "textAlign": "center",
-        "margin": "0", 
-        "padding": "10px"
-    }),
+    html.H2("Dashboard - Realtime Engagement and Sentiment Scores", 
+            style={ "width": "100%",  "textAlign": "center", "margin": "0",  "padding": "10px"}),
 
     html.Div([
         # Pie Charts Section
         html.Div([
-            html.H4("Sentiment Distribution", style={"textAlign": "center", "color": dark_theme["text"]}),
+            html.H3("Sentiment Distribution", style={"textAlign": "center", "color": dark_theme["text"]}),
             html.Div([
-                dcc.Graph(id=f"pie-chart-{i+1}", 
-                        style={"width": "30%", "padding": "5px"})
+                dcc.Graph(id=f"pie-chart-{i+1}", style={"height": "38vh", "width": "30%", "padding": "5px"}, className="PieDiv")
                 for i in range(6)
-            ], style={"display": "flex", "flexWrap": "wrap", "gap": "10px", "justifyContent": "center"})
+            ], style={"display": "flex", "flexWrap": "wrap", "gap": "10px", "justifyContent": "center", "background": dark_theme["background"]})
         ], style={"width": "65%", "padding": "20px", "background": dark_theme["background"], "borderRadius": "10px"}),
 
         # KPI Section
         html.Div([
-            html.H4("Engagement Scores", style={"textAlign": "center", "color": dark_theme["text"]}),
+            html.H3("Engagement Scores", style={"textAlign": "center", "color": dark_theme["text"]}),
             dcc.Dropdown(
                 id="company-dropdown",
                 options=[{"label": c, "value": c} for c in fact_options()],
                 value=fact_options().iloc[0],
                 clearable=False,
-                style={"marginBottom": "10px", "backgroundColor": dark_theme["card"], "color": dark_theme["text"]}
+                style={"marginBottom": "10px", "backgroundColor": dark_theme["background"], "color": dark_theme["text"]},
             ),
-            html.Div(id="kpi-grid", style={
-                "display": "flex",
-                "flexWrap": "wrap",
-                "justifyContent": "center",
-                "gap": "10px",
-                "padding": "10px",
-                "background": dark_theme["background"],
-                "borderRadius": "10px"
-            })
+            html.Div(id="kpi-grid", className="KpiGrid")
         ], style={"width": "30%", "padding": "20px", "verticalAlign": "top"})
     ], style={"display": "flex", "justifyContent": "space-between", "padding": "20px"})
 ], style={"background": dark_theme["background"], "color": dark_theme["text"], "font-family": "Verdana, sans-serif"})
-
-
 
 @app.callback(
     [Output("kpi-grid", "children")] + [Output(f"pie-chart-{i+1}", "figure") for i in range(6)],
@@ -93,28 +78,46 @@ def update_dashboard(company):
         html.Div([
             html.Div(key, style={"fontSize": "14px", "fontWeight": "bold", "margin-bottom": "10px"}),
             html.Div(val, style={"fontSize": "18px"})
-        ], style={
-            "background": dark_theme["card"],
-            "padding": "10px",
-            "textAlign": "center",
-            "borderRadius": "8px",
-            "display": "flex",
-            "flexDirection": "column",
-            "alignItems": "center",
-            "justifyContent": "center",
-            "width": "120px",
-            "height": "120px",
-            "color": dark_theme["text"]
-        }) for key, val in data["kpis"].items()
+        ], className="KpiBox") for key, val in data["kpis"].items()
     ]
     
-    color_map = {"Positive": "#116D6E", "Neutral": "#D49B54", "Negative": "#CD1818"}
-    pie_charts = [
-        px.pie(entry["data"], names="sentiment", values="count", title=entry["title"],
-               color=entry["data"]["sentiment"], color_discrete_map=color_map)
-        .update_layout(paper_bgcolor=dark_theme["background"], font_color=dark_theme["text"])
-        for entry in data["pie_data"]
-    ]
+    # Define a color mapping for sentiments
+    color_map = {"Positive": "#f94144", "Neutral": "#f9c74f", "Negative": "#90be6d"}
+    
+    pie_charts = []
+    for entry in data["pie_data"]:
+        fig = px.pie(
+            entry["data"], 
+            names="sentiment", 
+            values="count", 
+            title=entry["title"],
+            color=entry["data"]["sentiment"],
+            color_discrete_map=color_map
+        )
+        
+        fig.update_layout(
+            title_x=0.5,
+            paper_bgcolor=dark_theme["card"],
+            font_color=dark_theme["text"],
+            legend=dict(
+                orientation="h",
+                x=0.5,
+                xanchor="center",
+                y=-0.1
+            ),
+            # Keep margins minimal so the pie itself is larger
+            margin=dict(l=0, r=0, t=40, b=70),
+            autosize=True
+        )
+        
+        fig.update_traces(
+            domain=dict(x=[0,1], y=[0,1]),
+            textposition='inside',
+            textinfo='percent+label'
+        )
+        
+        pie_charts.append(fig)
+
     
     return [kpi_boxes] + pie_charts
 
