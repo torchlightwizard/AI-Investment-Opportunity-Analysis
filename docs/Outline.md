@@ -23,27 +23,3 @@ We will use these sources for our data:<br>
     Not an official api and does not work without proper proxy, session and header setup. Hence not used.
 9. Newspaper3k - https://newspaper.readthedocs.io/en/latest/
     Not an official api and does not work without proper proxy, session and header setup. Hence not used.
-
-## Extract
-
-## Transform
-
-## Load
-
-<br><br><br>
-
-
-
-# Preprocessing
-
-<br><br><br>
-
-
-
-# Analysis
-
-<br><br><br>
-
-
-
-# Prediction

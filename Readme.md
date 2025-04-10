@@ -1,66 +1,31 @@
-# Intro
-
-In this project we take data from several apis listed below in data section, and then find 1. engagement and 2. sentiment score. Finally we display them in a dashboard made in Plotly Dash.<br>
-The project covers apis, datalake+datawarehouse schemas in duckdb and uses the (extract, transform, load) approach to automate the process. So we can get daily, weekly or monthly (our choice) 
-of updates.<br>
-There are also tests to make sure that the apis have not broken, in the case that api changes, our program does not break.<br>
-
-<br>
-!!! Please put keys folder in .gitignore before starting.
-<br>
-<br>
-
-
-# Dashboard Screen Shots
-## 1
 ![Sample Report Page](public/Dashboard.PNG)
-## 2
-![Sample Report Page](public/Dashboard%203.PNG)
 
 
 
-# Proposal Version 1: Engagement Metrics Dashboard
+# Intro
+We perform sentiment analysis for trading.
 
-With a mindset to create value first instead of diving into deeper uncharted analysis.
-1. First we will first focus on basic kpi and metric building.
-2. We will collect data to fill these kpis and metrics in a time series fashion.
-3. A dashboard will be created to highlight and showcase these kpis and metrics.
+## Problem
+We want to trade popular stocks that relate to ai tech companies. We are interested in sentiment analysis.
 
-
-
-# Tools:
-1. APIs listed below
-2. Duckdb
-3. Plotly Express
-4. Plotly Dash
-5. Pandas
+## Proposed Solution
+1. Get data from different sources and store them in a data lake and in a datawarehouse.<br>
+2. Build a dashboard that displays sentiment analysis scores and engagement of each stock for each platform separately.<br>
 
 
 
-# Data
-We will be sourcing our data primarily through apis and past data sources.
-The apis will help us for new data predictions.
-The past data will be used for training.
-
-We will use these sources for our data:<br>
+# Data Sources:
 1. Youtube API
 2. Reddit API (Prawn)
 3. Google Search
 4. News Data API - https://newsdata.io/
 5. News API - https://newsapi.org/
 6. Market Aux API - https://www.marketaux.com/
-7. News DataHub API - https://newsdatahub.com/
-    Their servers are down, will reattempt after they are live.
-8. Pyprojects - https://pypi.org/project/pytrends/
-    Not an official api and does not work without proper proxy, session and header setup. Hence not used.
-9. Newspaper3k - https://newspaper.readthedocs.io/en/latest/
-    Not an official api and does not work without proper proxy, session and header setup. Hence not used.
 
 
 
-# Metrics
-
-It will have these sections:
+# KPIs / Metrics
+We search the company name and related queries on these platforms and use the results in the following manner:
 1. Engagement<br>
     1. Youtube<br>
         1. List Searched Videos: Avg Views<br>
@@ -80,29 +45,103 @@ It will have these sections:
 
 2. Sentiment<br>
     1. Youtube<br>
-        a. Positive or negative sentiment<br>
-            i. Titles + Descriptions<br>
-            ii. Comments<br>
+        1. Positive or negative sentiment<br>
+            1. Titles + Descriptions<br>
+            2. Comments<br>
 
     2. Reddit<br>
-        a. Searched<br>
-            i. Positive or negative sentiment<br>
-                (1) Titles + Descriptions<br>
-                (2) Comments<br>
+        1. Searched<br>
+            1. Positive or negative sentiment<br>
+                1. Titles + Descriptions<br>
+                2. Comments<br>
 
     3. Market Aux API<br>
-        a. Positive or negative sentiment<br>
-            i. Titles + Descriptions<br>
-            ii. API's Sentiment Score<br>
+        1. Positive or negative sentiment<br>
+            1. Titles + Descriptions<br>
+            2. API's Sentiment Score<br>
 
     4. News API Org<br>
-        a. Positive or negative sentiment<br>
-            i. Titles + Descriptions<br>
+        1. Positive or negative sentiment<br>
+            1. Titles + Descriptions<br>
 
     5. News Data IO<br>
-        a. Positive or negative sentiment<br>
-            i. Titles + Descriptions<br>
+        1. Positive or negative sentiment<br>
+            1. Titles + Descriptions<br>
 
     6. Google Search<br>
-        a. Positive or negative sentiment<br>
-            i. Link Titles<br>
+        1. Positive or negative sentiment<br>
+            1. Link Titles<br>
+
+
+
+# How to run:
+1. Configure Project:
+```
+python -m venv .localenv
+.localenv\Scripts\python -m pip install -r ./requirements.txt
+```
+
+2. Use
+    1. Extract Data
+    ```
+    .localenv\Scripts\python -m src.scripts.extract
+    ```
+    2. Transform Data
+    ```
+    .localenv\Scripts\python -m src.scripts.transform
+    ```
+    3. Dashboard
+    ```
+    .localenv\Scripts\python -m src.dashboard.dashboard
+    ```
+
+
+
+# Tools:
+1. APIs listed below
+2. Duckdb
+3. Plotly Express
+4. Plotly Dash
+5. Pandas
+
+
+
+# Keys
+Put the `.env` file in `./keys/.env`:
+
+```
+project
+├───keys
+    └───.env
+```
+
+```
+URL=http://localhost
+PORT=8080
+
+# Youtube
+YOUTUBE_API_KEY=
+PATH_TO_SECRET=
+YPATH_TO_TOKEN=
+
+# Reddit
+REDDIT_CLIENT_ID=
+REDDIT_CLIENT_SECRET=
+REDDIT_USER_AGENT=
+REDDIT_USERNAME=
+REDDIT_PASSWORD=
+RPATH_TO_TOKEN=
+
+# Google
+GOOGLE_API_KEY=
+GOOGLE_SEARCH_ENGINE_ID=
+
+# NewsDataIO
+NEWS_DATA_IO_API_KEY=
+
+# NewsApiOrg
+NEWS_API_ORG_API_KEY=
+
+# MarketAux
+MARKET_AUX_API_KEY=
+```

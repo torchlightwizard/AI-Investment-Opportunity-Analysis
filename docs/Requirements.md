@@ -51,79 +51,79 @@ With a mindset to create value first instead of diving into deeper uncharted ana
 The search criteria is selected as:
 1. Search for company name
 2. Search for company name with additional keywords<br>
-    a. Positive<br>
-        i. Stock Performance<br>
-        ii. Market Analysis<br>
-        iii. Funding Round<br>
-        iv. Revenue Growth<br>
-        v. Valuation<br>
-        vi. Acquisition Rumors<br>
-        vii. IPO<br>
-        viii. Investor Sentiment<br>
-        ix. Why People Love<br>
-    b. Negative<br>
-        i. Layoffs<br>
-        ii. Investor Exit<br>
-        iii. Scandals<br>
-        iv. Revenue Decline<br>
-        v. Valuation Drop<br>
-        vi. Why People Hate<br>
-        vii. Backlash<br>
+    1. Positive<br>
+        1. Stock Performance<br>
+        2. Market Analysis<br>
+        3. Funding Round<br>
+        4. Revenue Growth<br>
+        5. Valuation<br>
+        6. Acquisition Rumors<br>
+        7. IPO<br>
+        8. Investor Sentiment<br>
+        9. Why People Love<br>
+    2. Negative<br>
+        1. Layoffs<br>
+        2. Investor Exit<br>
+        3. Scandals<br>
+        4. Revenue Decline<br>
+        5. Valuation Drop<br>
+        6. Why People Hate<br>
+        7. Backlash<br>
 
 ## KPIs
 
 We can easily scoop up the following kpis and metrics:
 1. Youtube<br>
-    a. List Searched Videos: Max Views<br>
-    b. List Searched Videos: Max Likes<br>
-    c. List Searched Videos: Max Comments<br>
-    d. List Searched Videos: Max Comment Likes<br>
-    e. List Searched Videos: Max Comment Replies<br>
+    1. List Searched Videos: Max Views<br>
+    2. List Searched Videos: Max Likes<br>
+    3. List Searched Videos: Max Comments<br>
+    4. List Searched Videos: Max Comment Likes<br>
+    5. List Searched Videos: Max Comment Replies<br>
 
-    f. List Searched Videos: Avg Views<br>
-    g. List Searched Videos: Avg Likes<br>
-    h. List Searched Videos: Avg Comments<br>
-    i. List Searched Videos: Avg Comment Likes<br>
-    j. List Searched Videos: Avg Comment Replies<br>
+    6. List Searched Videos: Avg Views<br>
+    7. List Searched Videos: Avg Likes<br>
+    8. List Searched Videos: Avg Comments<br>
+    9. List Searched Videos: Avg Comment Likes<br>
+    10. List Searched Videos: Avg Comment Replies<br>
 
-    k. List Searched Videos Count<br>
+    11. List Searched Videos Count<br>
 2. Reddit<br>
-    a. List Searched Post: Max Score<br>
-    b. List Searched Post: Max Upvote Ratio<br>
-    c. List Searched Post: Max Comments<br>
-    d. List Searched Post: Max Comment Score<br>
-    e. List Searched Post: Max Comment Replies<br>
+    1. List Searched Post: Max Score<br>
+    2. List Searched Post: Max Upvote Ratio<br>
+    3. List Searched Post: Max Comments<br>
+    4. List Searched Post: Max Comment Score<br>
+    5. List Searched Post: Max Comment Replies<br>
 
-    f. List Searched Post: Avg Score<br>
-    g. List Searched Post: Avg Upvote Ratio<br>
-    h. List Searched Post: Avg Comments<br>
-    i. List Searched Post: Avg Comment Score<br>
-    j. List Searched Post: Avg Comment Replies<br>
+    6. List Searched Post: Avg Score<br>
+    7. List Searched Post: Avg Upvote Ratio<br>
+    8. List Searched Post: Avg Comments<br>
+    9. List Searched Post: Avg Comment Score<br>
+    10. List Searched Post: Avg Comment Replies<br>
 3. Google Search<br>
-    a. Search Result: Count<br>
-    b. Format Time<br>
+    1. Search Result: Count<br>
+    2. Format Time<br>
 4. News Data IO API<br>
-    a. Search Result: Count<br>
-    b. Description Length<br>
-    c. Source<br>
+    1. Search Result: Count<br>
+    2. Description Length<br>
+    3. Source<br>
 5. News API Org<br>
-    a. Search Result: Count<br>
-    b. Description Length<br>
-    c. Source<br>
+    1. Search Result: Count<br>
+    2. Description Length<br>
+    3. Source<br>
 6. Market Aux API<br>
-    a. Search Query Result: Count<br>
-    b. Search Query Result: Description Length<br>
-    c. Search Query Result: Source<br>
-    d. Search Query Result Entities and Sentiment: Scores List<br>
-    e. Search Query Result Entity With: Max Sentiment Score<br>
-    f. Search Query Result: Avg Sentiment Scores<br>
+    1. Search Query Result: Count<br>
+    2. Search Query Result: Description Length<br>
+    3. Search Query Result: Source<br>
+    4. Search Query Result Entities and Sentiment: Scores List<br>
+    5. Search Query Result Entity With: Max Sentiment Score<br>
+    6. Search Query Result: Avg Sentiment Scores<br>
 
-    g. Search Company Result: Count<br>
-    h. Search Company Result: Description Length<br>
-    i. Search Company Result: Source<br>
-    j. Search Company Result: Entities and Sentiment: Scores List<br>
-    k. Search Company Result Entity With: Max Sentiment Score<br>
-    l. Search Company Result: Avg Sentiment Scores<br>
+    7. Search Company Result: Count<br>
+    8. Search Company Result: Description Length<br>
+    9. Search Company Result: Source<br>
+    10. Search Company Result: Entities and Sentiment: Scores List<br>
+    11. Search Company Result Entity With: Max Sentiment Score<br>
+    12. Search Company Result: Avg Sentiment Scores<br>
 
 
 
@@ -131,9 +131,9 @@ We can easily scoop up the following kpis and metrics:
 
 When and if substantial data has been collected.<br>
 1. We will use sentiment analysis to find a basic positive or negative score associated with text of each company.<br>
-a. day<br>
-b. week<br>
-c. month (if possible)<br>
+1. day<br>
+2. week<br>
+3. month (if possible)<br>
 2. The "BERT" model/transformer will be used for this. It will be pretrained on another dataset which is yet to be decided.
 3. Finally per company, per timeframe sentiment score will be added to our dashboard.
 
@@ -143,33 +143,33 @@ For proposal version 3, we needed positive and negative texts separate from one 
 
 We can collect data from these:
 1. Youtube<br>
-    a. List Searched Videos: Titles<br>
-    b. List Searched Videos: Descriptions<br>
-    c. List Searched Videos: Categories<br>
-    d. List Searched Videos: Comments<br>
+    1. List Searched Videos: Titles<br>
+    2. List Searched Videos: Descriptions<br>
+    3. List Searched Videos: Categories<br>
+    4. List Searched Videos: Comments<br>
 2. Reddit<br>
-    a. List Searched Post: Titles<br>
-    b. List Searched Post: Descriptions<br>
-    c. List Searched Post: Comments<br>
+    1. List Searched Post: Titles<br>
+    2. List Searched Post: Descriptions<br>
+    3. List Searched Post: Comments<br>
 
-    d. List Subreddit Top Post: Titles<br>
-    e. List Subreddit Top Post: Descriptions<br>
-    f. List Subreddit Top Post: Comments<br>
+    4. List Subreddit Top Post: Titles<br>
+    5. List Subreddit Top Post: Descriptions<br>
+    6. List Subreddit Top Post: Comments<br>
 3. Google Search<br>
-    a. Link Titles<br>
+    1. Link Titles<br>
 4. News Data IO<br>
-    a. List Searched Articles: Titles<br>
-    b. List Searched Articles: Descriptions<br>
-    c. List Searched Articles: Sources<br>
+    1. List Searched Articles: Titles<br>
+    2. List Searched Articles: Descriptions<br>
+    3. List Searched Articles: Sources<br>
 5. News API Org<br>
-    a. List Searched Articles: Titles<br>
-    b. List Searched Articles: Descriptions<br>
-    c. List Searched Articles: Sources<br>
+    1. List Searched Articles: Titles<br>
+    2. List Searched Articles: Descriptions<br>
+    3. List Searched Articles: Sources<br>
 6. Market Aux API<br>
-    a. List Searched Articles: Titles<br>
-    b. List Searched Articles: Descriptions<br>
-    c. List Searched Articles: Sources<br>
-    d. List Searched Articles: Snippets<br>
+    1. List Searched Articles: Titles<br>
+    2. List Searched Articles: Descriptions<br>
+    3. List Searched Articles: Sources<br>
+    4. List Searched Articles: Snippets<br>
 
 ## KPIs
 
@@ -178,74 +178,74 @@ Another thing that can be done, fine tune some pretrained Sentiment classifier o
 
 With alot of data we can these scores for each platform:
 1. Youtube<br>
-    a. Positive or negative sentiment<br>
-        i. Titles<br>
-        ii. Descriptions<br>
-        iii. Comments<br>
-        iv. Categories<br>
+    1. Positive or negative sentiment<br>
+        1. Titles<br>
+        2. Descriptions<br>
+        3. Comments<br>
+        4. Categories<br>
 2. Reddit<br>
-    a. Searched<br>
-        i. Positive or negative sentiment<br>
-            (1) Titles<br>
-            (2) Descriptions<br>
-            (3) Comments<br>
-    b. Subreddit<br>
-        i. Positive or negative sentiment<br>
-            (1) Titles<br>
-            (2) Descriptions<br>
-            (3) Comments<br>
+    1. Searched<br>
+        1. Positive or negative sentiment<br>
+            1. Titles<br>
+            2. Descriptions<br>
+            3. Comments<br>
+    2. Subreddit<br>
+        1. Positive or negative sentiment<br>
+            1. Titles<br>
+            2. Descriptions<br>
+            3. Comments<br>
 3. Google Search<br>
-    a. Positive or negative sentiment<br>
-        i. Link Titles<br>
+    1. Positive or negative sentiment<br>
+        1. Link Titles<br>
 4. News Data IO<br>
-    a. Positive or negative sentiment<br>
-        i. Titles<br>
-        ii. Descriptions<br>
-        iii. Sources<br>
+    1. Positive or negative sentiment<br>
+        1. Titles<br>
+        2. Descriptions<br>
+        3. Sources<br>
 5. News API Org<br>
-    a. Positive or negative sentiment<br>
-        i. Titles<br>
-        ii. Descriptions<br>
-        iii. Sources<br>
+    1. Positive or negative sentiment<br>
+        1. Titles<br>
+        2. Descriptions<br>
+        3. Sources<br>
 6. Market Aux API<br>
-    a. Positive or negative sentiment<br>
-        i. Titles<br>
-        ii. Descriptions<br>
-        iii. Sources<br>
-        iv. Snippets<br>
+    1. Positive or negative sentiment<br>
+        1. Titles<br>
+        2. Descriptions<br>
+        3. Sources<br>
+        4. Snippets<br>
 
 With alot of data we can these scores for each company:
 1. Company XYZ<br>
-    a. Positive or negative sentiment<br>
-        i. Youtube<br>
-            (1) Titles<br>
-            (2) Descriptions<br>
-            (3) Comments<br>
-            iv. Categories<br>
-        ii. Reddit<br>
-            (1) Searched<br>
-                (a) Titles<br>
-                (b) Descriptions<br>
-                (c) Comments<br>
-            (2) Subreddit<br>
-                (a) Titles<br>
-                (b) Descriptions<br>
-                (c) Comments<br>
-        iii. Google Search<br>
-            (1) Link Titles<br>
-        iv. News Data IO<br>
-            (1) Titles<br>
-            (2) Descriptions<br>
-            (3) Sources<br>
-        v. News API Org<br>
-            (1) Titles<br>
-            (2) Descriptions<br>
-            (3) Sources<br>
-        vi. Market Aux API<br>
-            (1) Titles<br>
-            (2) Descriptions<br>
-            (3) Sources<br>
-            (4) Snippets<br>
+    1. Positive or negative sentiment<br>
+        1. Youtube<br>
+            1. Titles<br>
+            2. Descriptions<br>
+            3. Comments<br>
+            4. Categories<br>
+        2. Reddit<br>
+            1. Searched<br>
+                1. Titles<br>
+                2. Descriptions<br>
+                3. Comments<br>
+            2. Subreddit<br>
+                1. Titles<br>
+                2. Descriptions<br>
+                3. Comments<br>
+        3. Google Search<br>
+            1. Link Titles<br>
+        4. News Data IO<br>
+            1. Titles<br>
+            2. Descriptions<br>
+            3. Sources<br>
+        5. News API Org<br>
+            1. Titles<br>
+            2. Descriptions<br>
+            3. Sources<br>
+        6. Market Aux API<br>
+            1. Titles<br>
+            2. Descriptions<br>
+            3. Sources<br>
+            4. Snippets<br>
 
 
 
@@ -275,16 +275,16 @@ E.g there is no need for us to analyse how many smartphone companies have embedd
 This knowledge is simply useless. In light of our above three characteristics we shall use the following metrics:
 
 1. The related industries<br>
-    a. Companies using the same AI models<br>
-    b. Academic Funding (Increased chance to find something interesting)<br>
-    c. Company RnD Funding (Increased chance to find something interesting)<br>
+    1. Companies using the same AI models<br>
+    2. Academic Funding (Increased chance to find something interesting)<br>
+    3. Company RnD Funding (Increased chance to find something interesting)<br>
 2. The expertise<br>
-    a. Research papers published (Per new ai model discovered)<br>
-    b. Phds working in said companies<br>
-    c. Acadmic achievements of these Phds<br>
+    1. Research papers published (Per new ai model discovered)<br>
+    2. Phds working in said companies<br>
+    3. Acadmic achievements of these Phds<br>
 3. The opportunities<br>
-    a. Research papers that have different keywords than most but suddenly too many reviews<br>
-    b. AI models that have been launched and have high benchmarks<br>
+    1. Research papers that have different keywords than most but suddenly too many reviews<br>
+    2. AI models that have been launched and have high benchmarks<br>
 
 
 

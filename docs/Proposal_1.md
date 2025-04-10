@@ -20,29 +20,29 @@ It will have these sections:
 
 2. Sentiment<br>
     1. Youtube<br>
-        a. Positive or negative sentiment<br>
-            i. Titles + Descriptions<br>
-            ii. Comments<br>
+        1. Positive or negative sentiment<br>
+            1. Titles + Descriptions<br>
+            2. Comments<br>
 
     2. Reddit<br>
-        a. Searched<br>
-            i. Positive or negative sentiment<br>
-                (1) Titles + Descriptions<br>
-                (2) Comments<br>
+        1. Searched<br>
+            1. Positive or negative sentiment<br>
+                1. Titles + Descriptions<br>
+                2. Comments<br>
 
     3. Market Aux API<br>
-        a. Positive or negative sentiment<br>
-            i. Titles + Descriptions<br>
-            ii. API's Sentiment Score<br>
+        1. Positive or negative sentiment<br>
+            1. Titles + Descriptions<br>
+            2. API's Sentiment Score<br>
 
     4. News API Org<br>
-        a. Positive or negative sentiment<br>
-            i. Titles + Descriptions<br>
+        1. Positive or negative sentiment<br>
+            1. Titles + Descriptions<br>
 
     5. News Data IO<br>
-        a. Positive or negative sentiment<br>
-            i. Titles + Descriptions<br>
+        1. Positive or negative sentiment<br>
+            1. Titles + Descriptions<br>
 
     6. Google Search<br>
-        a. Positive or negative sentiment<br>
-            i. Link Titles<br>
+        1. Positive or negative sentiment<br>
+            1. Link Titles<br>
