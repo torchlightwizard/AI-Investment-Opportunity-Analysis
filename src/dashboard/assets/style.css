@@ -5,7 +5,7 @@
     --select_bg: #242423;
     --select_txt: #fdfffc;
 
-    --card_bg: #242423;
+    --card_bg: #333533;
     --card_txt: #fdfffc;
 
     --border_bg: #fdfffc;
@@ -32,9 +32,9 @@ html, body {
     background-color: var(--select_bg) !important;
     color: var(--select_txt) !important;
     
-    border-width: 3px;
-    border-color: var(--border_bg);
-    border-style: solid;
+    /* border-width: 3px;
+    border-color: var(--border_bg); */
+    border-style: none;
     border-radius: 8px;
 }
 
@@ -76,18 +76,18 @@ html, body {
     color: var(--card_txt);
     
     /* More dominant, modern box shadow */
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
-    transition: all 0.2s ease;
+    box-shadow: 10px 10px 10px #242423;
+    transition: all 0.3s ease;
 
-    border-width: 3px;
+    /* border-width: 3px;
     border-color: var(--border_bg);
-    border-style: solid;
+    border-style: solid; */
     border-radius: 8px;
 }
   
 .KpiBox:hover {
     transform: translateY(-3px);
-    box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 10px 20px #242423;
 }
   
 
@@ -104,11 +104,11 @@ html, body {
 .PieDiv {
     background: var(--card_bg);
 
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
-    transition: all 0.2s ease;
+    box-shadow: 10px 10px 10px #242423;
+    transition: all 0.3s ease;
 
-    border-width: 3px;
+    /* border-width: 3px;
     border-color: var(--border_bg);
-    border-style: solid;
+    border-style: solid; */
     border-radius: 8px;
 }

@@ -14,16 +14,16 @@ from src.load.db import (
 def get_data(company):
     return {
         "kpis": {
-            "Youtube Views": engagement_youtube_avg_views(company).iloc[0]["views"],
-            "Reddit Score": engagement_reddit_avg_score(company).iloc[0]["score"],
-            "Youtube Likes": engagement_youtube_avg_likes(company).iloc[0]["likes"],
-            "Reddit Upvote Ratio": engagement_reddit_avg_upvote_ratio(company).iloc[0]["upvote_ratio"],
-            "Youtube Comments": engagement_youtube_avg_comments(company).iloc[0]["comments"],
-            "Reddit Comments": engagement_reddit_avg_comments(company).iloc[0]["comments"],
-            "Youtube Comment Likes": engagement_youtube_avg_comment_likes(company).iloc[0]["likes"],
-            "Reddit Comment Score": engagement_reddit_avg_comment_score(company).iloc[0]["score"],
-            "Google Search Results": engagement_googlesearch_search_results(company).iloc[0]["search_results"],
-            "Google Search Time": engagement_googlesearch_format_time(company).iloc[0]["format_time"]
+            "Youtube Views": {"data": engagement_youtube_avg_views(company).iloc[0]["views"], "color": "#fa003a"},
+            "Youtube Likes": {"data": engagement_youtube_avg_likes(company).iloc[0]["likes"], "color": "#fa003a"},
+            "Youtube Comments": {"data": engagement_youtube_avg_comments(company).iloc[0]["comments"], "color": "#fa003a"},
+            "Youtube Comment Likes": {"data": engagement_youtube_avg_comment_likes(company).iloc[0]["likes"], "color": "#fa003a"},
+            "Reddit Score": {"data": engagement_reddit_avg_score(company).iloc[0]["score"], "color": "#FFBD00"},
+            "Reddit Upvote Ratio": {"data": engagement_reddit_avg_upvote_ratio(company).iloc[0]["upvote_ratio"], "color": "#FFBD00"},
+            "Reddit Comments": {"data": engagement_reddit_avg_comments(company).iloc[0]["comments"], "color": "#FFBD00"},
+            "Reddit Comment Score": {"data": engagement_reddit_avg_comment_score(company).iloc[0]["score"], "color": "#FFBD00"},
+            "Google Search Results": {"data": engagement_googlesearch_search_results(company).iloc[0]["search_results"], "color": "#4a81e9"},
+            "Google Search Time": {"data": engagement_googlesearch_format_time(company).iloc[0]["format_time"], "color": "#4a81e9"}
         },
         "pie_data": [
             {"title": "Youtube", "data": sentiment_youtube_comments(company)},
@@ -37,7 +37,7 @@ def get_data(company):
 
 app = dash.Dash(__name__)
 
-dark_theme = {"background": "#333533", "card": "#242423", "text": "#fdfffc"}
+dark_theme = {"background": "#333533", "card": "#333533", "text": "#fdfffc"}
 
 app.layout = html.Div([
     html.H2("Dashboard - Realtime Engagement and Sentiment Scores", 
@@ -77,7 +77,7 @@ def update_dashboard(company):
     kpi_boxes = [
         html.Div([
             html.Div(key, style={"fontSize": "14px", "fontWeight": "bold", "margin-bottom": "10px"}),
-            html.Div(val, style={"fontSize": "18px"})
+            html.Div(val["data"], style={"fontSize": "18px", "color": val["color"]})
         ], className="KpiBox") for key, val in data["kpis"].items()
     ]
     
